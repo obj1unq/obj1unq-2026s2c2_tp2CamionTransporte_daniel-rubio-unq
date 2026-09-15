@@ -1,0 +1,91 @@
+import camion.*
+import cosas.*
+
+describe "Prueba del ejercicio 2.1: Carga y descarga del camión" {
+
+  test "el camión permite cargar y descargar cosas, y rechaza cargas/descargas inválidas" {
+    assert.equals(#{}, camion.cosas()) // camión recién creado, sin nada cargado
+
+    camion.cargar(bumblebee)
+    assert.equals(#{bumblebee}, camion.cosas()) // solo Bumblebee cargado
+
+    camion.cargar(knightRider)
+    assert.equals(#{bumblebee, knightRider}, camion.cosas()) // Bumblebee y Knight Rider cargados
+
+    camion.descargar(bumblebee)
+    assert.equals(#{knightRider}, camion.cosas()) // solo Knight Rider tras descargar Bumblebee
+
+    assert.throwsException({ camion.cargar(knightRider) }) // no se puede cargar algo ya cargado
+
+    assert.throwsException({ camion.descargar(bumblebee) }) // no se puede descargar algo no cargado
+  }
+
+}
+
+describe "Prueba del ejercicio 2.2: Todo peso par" {
+
+  test "el camión indica si todo lo cargado tiene peso par" {
+    arenaAGranel.peso(50)
+    camion.cargar(bumblebee)
+    camion.cargar(arenaAGranel)
+    assert.that(camion.cadaCosaEnElCamionTienePesoPar()) // Bumblebee (800) y arena (50) son pesos pares
+
+    arenaAGranel.peso(51)
+    assert.notThat(camion.cadaCosaEnElCamionTienePesoPar()) // arena a 51 kg rompe la condición
+  }
+
+}
+
+describe "Prueba del ejercicio 2.3: Hay alguno que pesa" {
+
+  test "el camión indica si contiene alguna cosa que pesa una cantidad dada de kilogramos" {
+    arenaAGranel.peso(50)
+    camion.cargar(bumblebee)
+    camion.cargar(arenaAGranel)
+
+    assert.that(camion.hayAlgoQuePesa(50)) // hay algo que pesa 50: la arena
+    assert.that(camion.hayAlgoQuePesa(800)) // hay algo que pesa 800: Bumblebee
+    assert.notThat(camion.hayAlgoQuePesa(500)) // nada pesa 500
+  }
+
+}
+
+describe "Prueba del ejercicio 2.4: Peso y exceso de peso" {
+
+  test "el camión calcula el peso total y detecta si está excedido según su carga" {
+    paqueteDeLadrillos.ladrillos(300)
+    camion.cargar(bumblebee)
+    camion.cargar(paqueteDeLadrillos)
+
+    assert.equals(2400, camion.pesoTotal()) // tara 1000 + Bumblebee 800 + 300 ladrillos (600)
+    assert.notThat(camion.tieneExceso()) // 2400 no supera el máximo de 2500
+
+    paqueteDeLadrillos.ladrillos(400)
+    assert.equals(2600, camion.pesoTotal()) // tara 1000 + Bumblebee 800 + 400 ladrillos (800)
+    assert.that(camion.tieneExceso()) // 2600 supera el máximo de 2500
+  }
+
+}
+
+describe "Prueba del ejercicio 2.5: El de nivel" {
+
+  test "el camión encuentra una cosa cargada por su nivel de peligrosidad exacto, o rompe si no existe" {
+    bateriaAntiaerea.misiles(sinMisiles)
+    camion.cargar(bumblebee)
+    camion.cargar(bateriaAntiaerea)
+    camion.cargar(residuosRadiactivos)
+
+    assert.equals(bateriaAntiaerea, camion.nivelPeligrosidad(0)) // batería sin misiles: peligrosidad 0
+    assert.equals(bumblebee, camion.nivelPeligrosidad(15)) // Bumblebee en modo auto: peligrosidad 15
+    assert.equals(residuosRadiactivos, camion.nivelPeligrosidad(200)) // residuos radiactivos: peligrosidad 200
+
+    assert.throwsException({ camion.nivelPeligrosidad(30) }) // nada tiene peligrosidad 30 todavía
+
+    bumblebee.transformacion(transformadoEnRobot)
+    assert.equals(bumblebee, camion.nivelPeligrosidad(30)) // Bumblebee en modo robot: ahora peligrosidad 30
+
+    bateriaAntiaerea.misiles(conMisiles)
+    assert.equals(bateriaAntiaerea, camion.nivelPeligrosidad(100)) // batería con misiles: peligrosidad 100
+  }
+
+}
