@@ -45,65 +45,47 @@ object camion {
 		return(cosas.find({cosa => cosa.nivelPeligrosidad() == nivelPeligrosidad}))
 	}
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------------
-	//posibles soluciones
 
 	method cosasCargadasEnCamionDeNivelDePeligrosidad(peligrosidad) = cosas.filter({cosa => cosa.nivelPeligrosidad() > peligrosidad})
 	
 	method cosasCargadasEnCamionConMasNivelDePeligrosidadQue(cosaARevisar) = self.cosasCargadasEnCamionDeNivelDePeligrosidad(cosaARevisar.nivelPeligrosidad())
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 //2.7
-method puedeCircularEnRuta(nivelMaximoDePeligrosidad) = !self.tieneExceso() && !self.hayCosaQueSupereNivelDePeligrosidad(nivelMaximoDePeligrosidad)
+	method puedeCircularEnRuta(nivelMaximoDePeligrosidad) = !self.tieneExceso() && !self.hayCosaQueSupereNivelDePeligrosidad(nivelMaximoDePeligrosidad)
 	
-method hayCosaQueSupereNivelDePeligrosidad(nivelDePeligrosidad) = cosas.any({cosa => cosa.nivelPeligrosidad() > nivelDePeligrosidad})
+	method hayCosaQueSupereNivelDePeligrosidad(nivelDePeligrosidad) = cosas.any({cosa => cosa.nivelPeligrosidad() > nivelDePeligrosidad})
 
 //2.9
-method hayCosaQuePeseEntreMinimoYMaximo(minimo, maximo){
+	method hayCosaQuePeseEntreMinimoYMaximo(minimo, maximo){
 	return cosas.any({cosa => cosa.peso() >= minimo && cosa.peso() <= maximo})  //  minimo =< cosa.peso() =< maximo
 } 
 
 //2.10
-method cosaMasPesada(){
+	method cosaMasPesada(){
 	return cosas.max({cosa => cosa.peso()})
 }  
 
-method pesoDeCadaCosa() {
-	cosas.map({cosa => cosa.peso()})
+	method pesoDeCadaCosa() {
+		return cosas.map({cosa => cosa.peso()})
+	}
+
+	method cantidadTotalDeBultos() {
+		return cosas.sum({cosa=>cosa.cantidadDeBultos()})
+	}
+
+	method sufreAccidente() {
+		cosas.forEach({cosa => cosa.accidente()})
+	}
+
+	method vaciarCamion() {
+	cosas.clear()
+	}
+
+	method transportar(destino, camino) {
+	if (camino.puedeSoportarElViaje(self)) {
+		destino.almacenarDeCamion_(self)
+	}else {
+		self.error("No se puede realizar el transporte")
+	}
 }
-
-method cantidadTotalDeBultos() {
-	return cosas.sum({cosa=>cosa.cantidadTotalDeBultos()})
-}
-
-method sufreAccidente() {
-	cosas.forEach({cosa => cosa.accidente()})
-  
-}
-
-method vaciarCamion() {
-  cosas.clear()
-}
-
-method trasportar(destino, camino) {
-  if (camino.puedeTransportar_(self) ){
-    destino.almacenarDeCamion_(self)
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

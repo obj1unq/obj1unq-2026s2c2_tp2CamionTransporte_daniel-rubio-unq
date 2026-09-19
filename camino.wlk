@@ -1,7 +1,7 @@
 import camion.*
 import almacen.*
 
-object caminoVecinales {
+object caminosVecinales {
   	var pesoMaximoPermitido = 0
 	
 	method pesoMaximoPermitido(_pesoMaximoPermitido) {pesoMaximoPermitido = _pesoMaximoPermitido}

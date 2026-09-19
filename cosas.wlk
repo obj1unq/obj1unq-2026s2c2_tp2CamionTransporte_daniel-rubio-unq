@@ -135,24 +135,24 @@ object bumblebee{
 		return 2
 	}
 	method accidente() {
-		if (transformacion == transformadoEnAuto){
-			transformacion = transformadoEnRobot
-
-		}else{ transformacion = transformadoEnAuto}
+		transformacion = transformacion.siguiente()
 	}
 }
 
 //objetos que son usados en bumblebee
 object transformadoEnAuto{
 	method peligrosidad() = 15
+	method siguiente() = transformadoEnRobot
 }
 object transformadoEnRobot{
 	method peligrosidad() = 30
+	method siguiente() = transformadoEnAuto
 }
 
 object contenedorPortuario{
 	const contenidos = #{}
-	
+	method agregarContenido(contenidoAAgregar) { contenidos.add(contenidoAAgregar) }
+
 	method peso() = self.pesoDelContenedorPortuario() + self.pesoDeLoContenido()
 	method pesoDelContenedorPortuario() = 100
 	method pesoDeLoContenido() = contenidos.sum({cosa => cosa.peso()})
@@ -168,7 +168,7 @@ object contenedorPortuario{
 	}
 
 	method cantidadDeBultosQueTieneAdentro() {
-		return contenidos.sum({cosa => cosa.peso()})
+		return contenidos.sum({cosa => cosa.cantidadDeBultos()})
 	}
 	method accidente() {
 		contenidos.forEach({cosa => cosa.accidente()})

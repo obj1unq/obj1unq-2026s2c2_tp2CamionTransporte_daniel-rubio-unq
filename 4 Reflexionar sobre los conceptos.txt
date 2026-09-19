@@ -1,0 +1,13 @@
+¿Qué nombre tiene el tipo de los objetos polimórficos?
+El objeto polimórfico es Cosa. Es el tipo que tiene todo lo que el camión puede cargar. (es decir todo lo transportable)
+
+¿Qué mensajes componen ese tipo?
+Componen ese tipo: peso(), nivelPeligrosidad(),pesoEsPar() y cantidadDeBultos()
+Todos los objetos entienden el mensaje “cosa” y lo resuelven de diferentes maneras. 
+
+¿Qué objetos son los emisores de los mensajes polimórficos?
+Los objetos emisores de mensajes que usan Cosa y le mandan estos mensajes a cada elemento son:
+-camion que le manda peso(), nivelPeligrosidad(), cantidadDeBultos(), pesoEsPar() 
+
+-contenedorPortuario:  le manda peso(), nivelPeligrosidad(), cantidadDeBultos()
+

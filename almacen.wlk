@@ -1,11 +1,17 @@
 import camion.*
 
 object almacen {
-    const almacenado = #{}
+	const almacenado = #{}
 
-    method almacenarDeCamion_(camion) {
-        almacenado.addAll(camion.cosas())
-        camion.vaciarCamion()
-    }
+	method almacenado() = almacenado
+
+	method almacenar(cosa) {
+		almacenado.add(cosa)
+	}
+
+	method almacenarDeCamion_(camion) {
+		almacenado.addAll(camion.cosas())
+		camion.vaciarCamion()
+	}
 
 }
