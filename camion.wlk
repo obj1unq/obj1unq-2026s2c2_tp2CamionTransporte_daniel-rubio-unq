@@ -1,7 +1,9 @@
 import cosas.*
 
 object camion {
-	const property cosas = #{}
+	const cosas = #{}
+
+	method cosas() = cosas  // al ser const no se puede modificar desde afuera.
 		
 	method cargar(unaCosa) {
 		self.validarCarga(unaCosa)
@@ -27,8 +29,7 @@ object camion {
 	
 	method estaCargadoEnCamion(cosa) = cosas.contains(cosa)
 
-	method cadaCosaEnElCamionTienePesoPar() = cosas.all({cosa => cosa.pesoEsPar()})
-
+	
 	method hayAlgoQuePesa(peso) {
 		return cosas.any({cosa => cosa.peso() == peso})
 	}
@@ -57,7 +58,7 @@ object camion {
 
 //2.9
 	method hayCosaQuePeseEntreMinimoYMaximo(minimo, maximo){
-	return cosas.any({cosa => cosa.peso() >= minimo && cosa.peso() <= maximo})  //  minimo =< cosa.peso() =< maximo
+	return cosas.any({ cosa => cosa.peso().between(minimo, maximo) })  
 } 
 
 //2.10
@@ -77,15 +78,20 @@ object camion {
 		cosas.forEach({cosa => cosa.accidente()})
 	}
 
-	method vaciarCamion() {
+	method vaciartransporte() {
 	cosas.clear()
 	}
 
 	method transportar(destino, camino) {
-	if (camino.puedeSoportarElViaje(self)) {
-		destino.almacenarDeCamion_(self)
-	}else {
-		self.error("No se puede realizar el transporte")
+		self.validarViaje(camino)
+		destino.almacenarDe(self)
 	}
-}
+
+	method validarViaje(camino) {
+		if (!camino.puedeSoportarElViaje(self)) {
+			self.error("No se puede realizar el transporte")
+		}
+	}
+	method cadaCosaEnElCamionTienePesoPar() = cosas.all({cosa => cosa.peso().even()})
+
 }

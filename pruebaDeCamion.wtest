@@ -334,7 +334,7 @@ describe "Prueba del ejercicio 2.13: Accidente" {
     camion.sufreAccidente()
 
     assert.equals(15, bumblebee.nivelPeligrosidad())                                                          // pasó de robot (30) a auto (15)
-    assert.equals(45, residuosRadiactivos.peso())                                                             // 30 + 15, cargados directo al camión (sin embalaje)
+    assert.equals(50, residuosRadiactivos.peso())                                                             // 30 + 20, cargados directo al camión (sin embalaje)
     assert.equals(0, paqueteDeLadrillos.peso())                                                               // tenía 10 ladrillos (< 12), quedan 0
     assert.equals(0, bateriaAntiaerea.nivelPeligrosidad())                                                    // ya estaba descargada, sigue descargada
   }

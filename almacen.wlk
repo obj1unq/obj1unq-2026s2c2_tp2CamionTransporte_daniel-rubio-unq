@@ -9,9 +9,9 @@ object almacen {
 		almacenado.add(cosa)
 	}
 
-	method almacenarDeCamion_(camion) {
-		almacenado.addAll(camion.cosas())
-		camion.vaciarCamion()
+	method almacenarDe(transporte) {
+		almacenado.addAll(transporte.cosas())
+		transporte.vaciartransporte()
 	}
 
 }

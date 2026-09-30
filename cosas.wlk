@@ -2,8 +2,6 @@ object knightRider {
 	method peso() = 500
 	method nivelPeligrosidad() = 10
 	
-	method pesoEsPar() = self.peso() % 2 == 0
-
 	method cantidadDeBultos() {
 		return 1
 	}
@@ -18,8 +16,6 @@ object arenaAGranel{
 	
 	method nivelPeligrosidad() = 1
 	
-	method pesoEsPar() = self.peso() % 2 == 0
-
 	method cantidadDeBultos() {
 		return 1
 	}
@@ -38,8 +34,6 @@ object paqueteDeLadrillos{
 	
 	method pesoDeLadrillo() = 2
 	
-	method pesoEsPar() = self.peso() % 2 == 0
-
 	method cantidadDeBultos() {
 		return if (ladrillos <= 100){
 				1
@@ -49,14 +43,12 @@ object paqueteDeLadrillos{
 			}else{
 			3}}
 	}
+
+	
 	method accidente() {
-		if(ladrillos > 12){
-			self.ladrillos(ladrillos - 12)
-		}
-		else{
-			self.ladrillos(0)
-		}
-		}
+		ladrillos = (ladrillos - 12).max(0)
+	}
+		
 
 }
 
@@ -67,14 +59,12 @@ object residuosRadiactivos{
 	method peso() = peso
 	
 	method nivelPeligrosidad() = 200
-	
-	method pesoEsPar() = self.peso() % 2 == 0
 
 	method cantidadDeBultos() {
 		return 1
 	}
 	method accidente() {
-		peso = peso +20
+		peso = peso + 20
 	  
 	}
 
@@ -88,8 +78,6 @@ object bateriaAntiaerea{
 
 	method peso() = misiles.peso()
 	method nivelPeligrosidad() = misiles.peligrosidad()
-	
-	method pesoEsPar() = self.peso() % 2 == 0
 
 	method cantidadDeBultos() {
 		return misiles.bultos()
@@ -129,8 +117,6 @@ object bumblebee{
 	method peso() = 800
 	method nivelPeligrosidad() = transformacion.peligrosidad()
 	
-	method pesoEsPar() = self.peso() % 2 == 0
-
 	method cantidadDeBultos() {
 		return 2
 	}
@@ -157,12 +143,9 @@ object contenedorPortuario{
 	method pesoDelContenedorPortuario() = 100
 	method pesoDeLoContenido() = contenidos.sum({cosa => cosa.peso()})
 	
-	method nivelPeligrosidad() = if(contenidos.isEmpty()){0} else{self.peligrosidadDelContenidoMasPeligroso()}
-	
-	method peligrosidadDelContenidoMasPeligroso() = contenidos.map({cosa => cosa.nivelPeligrosidad()}).max()
-
-	method pesoEsPar() = self.peso() % 2 == 0
-
+	method nivelPeligrosidad() = if (contenidos.isEmpty()) 0 else self.peligrosidadDelContenidoMasPeligroso()
+	//method peligrosidadDelContenidoMasPeligroso() = contenidos.map({cosa => cosa.nivelPeligrosidad()}).max()
+	method peligrosidadDelContenidoMasPeligroso() = contenidos.max({ cosa => cosa.nivelPeligrosidad() }).nivelPeligrosidad()
 	method cantidadDeBultos() {
 		return 1 + self.cantidadDeBultosQueTieneAdentro()
 	}
@@ -190,8 +173,7 @@ object embalajeDeSeguridad {
 	method nivelPeligrosidad() {
 		return envuelto.nivelPeligrosidad() / 2
 	}
-	method pesoEsPar() = self.peso() % 2 == 0
-
+	
 	method cantidadDeBultos() {
 		return 2
 	}

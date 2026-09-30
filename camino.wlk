@@ -6,7 +6,7 @@ object caminosVecinales {
 	
 	method pesoMaximoPermitido(_pesoMaximoPermitido) {pesoMaximoPermitido = _pesoMaximoPermitido}
 	
-	method puedeSoportarElViaje(camion) = camion.pesoTotal() < pesoMaximoPermitido
+	method puedeSoportarElViaje(camion) = camion.pesoTotal() <= pesoMaximoPermitido
 }
 
 
